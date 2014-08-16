@@ -42,7 +42,7 @@ public class WordCount {
 	
 	public static void main(String[] args) throws Exception {
 		JobConf conf = new JobConf(WordCount.class);
-		conf.setJobName("wordCount");
+		conf.setJobName("WordCount");
 		
 		conf.setOutputKeyClass(Text.class);
 		conf.setOutputValueClass(IntWritable.class);
