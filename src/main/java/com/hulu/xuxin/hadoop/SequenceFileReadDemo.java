@@ -1,4 +1,4 @@
-package com.hulu.xuxin;
+package com.hulu.xuxin.hadoop;
 
 import java.io.IOException;
 import java.net.URI;
@@ -8,28 +8,32 @@ import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.util.ReflectionUtils;
 
-public class MapFileReadFile {
+public class SequenceFileReadDemo {
 
 	private static void read(String uri) throws IOException {
 		Configuration configuration = new Configuration();
 		FileSystem fs = FileSystem.get(URI.create(uri), configuration);
-		MapFile.Reader reader = null;
+		Path path = new Path(uri);
+		SequenceFile.Reader reader = null;
 		try {
-			reader = new MapFile.Reader(fs, uri, configuration);
-			WritableComparable key = (WritableComparable)ReflectionUtils.newInstance(reader.getKeyClass(), configuration);
+			reader = new SequenceFile.Reader(fs, path, configuration);
+			Writable key = (Writable)ReflectionUtils.newInstance(reader.getKeyClass(), configuration);
 			Writable value = (Writable)ReflectionUtils.newInstance(reader.getValueClass(), configuration);
+			long position = reader.getPosition();
 			while (reader.next(key, value)) {
-				System.out.printf("%s\t%s\n", key, value);
+				String syncSeen = reader.syncSeen() ? "*" : "";
+				System.out.printf("[%s%s]\t%s\t%s\n", position, syncSeen, key, value);
+				position = reader.getPosition();
 			}
-			reader.get(new IntWritable(7), value);
-			System.out.printf("%s\n", value);
 		} finally {
 			IOUtils.closeStream(reader);
 		}
 	}
 	
 	public static void main(String[] args) throws IOException {
-		read("output/mapFile");
+		read("output/sequence1");
+		System.out.print("\n\n\n");
+		read("output/sequence2");
 	}
 
 }

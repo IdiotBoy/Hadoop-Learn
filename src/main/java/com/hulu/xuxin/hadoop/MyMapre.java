@@ -1,4 +1,4 @@
-package com.hulu.xuxin;
+package com.hulu.xuxin.hadoop;
 
 import org.apache.hadoop.io.*;
  

@@ -1,4 +1,4 @@
-package com.hulu.xuxin;
+package com.hulu.xuxin.hadoop;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -14,8 +14,8 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
-import com.hulu.xuxin.WordCount2.Map;
-import com.hulu.xuxin.WordCount2.Reduce;
+import com.hulu.xuxin.hadoop.WordCount2.Map;
+import com.hulu.xuxin.hadoop.WordCount2.Reduce;
 
 public class WordCount3 {
 
